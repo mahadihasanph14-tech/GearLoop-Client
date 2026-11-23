@@ -97,7 +97,7 @@ gearloop-client/
 ### 1. Clone the Repository
 
 ```bash
-git clone YOUR_CLIENT_REPOSITORY_URL
+git clone https://github.com/mahadihasanph14-tech/GearLoop-Client
 ```
 
 ### 2. Navigate to the Project
