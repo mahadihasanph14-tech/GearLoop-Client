@@ -8,7 +8,7 @@ This repository contains the frontend application of GearLoop, built with Next.j
 
 - **Live Website:** `dddddddd`
 - **Client Repository:** `https://github.com/mahadihasanph14-tech/GearLoop-Client`
-- **Server Repository:** `YOUR_SERVER_REPOSITORY_URL`
+- **Server Repository:** `https://github.com/mahadihasanph14-tech/GearLoop-server`
 
 ## ✨ Key Features
 
