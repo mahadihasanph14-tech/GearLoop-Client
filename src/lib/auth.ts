@@ -9,11 +9,28 @@ if (!uri) {
   throw new Error("MONGODB_URI is missing");
 }
 
-const client = new MongoClient(uri);
+// Reuse MongoDB client across warm serverless invocations
+declare global {
+  var gearLoopMongoClient: MongoClient | undefined;
+}
+
+const client =
+  globalThis.gearLoopMongoClient ??
+  new MongoClient(uri, {
+    maxPoolSize: 10,
+    serverSelectionTimeoutMS: 10000,
+  });
+
+if (!globalThis.gearLoopMongoClient) {
+  globalThis.gearLoopMongoClient = client;
+}
+
 const db = client.db("gearloop_db");
 
 export const auth = betterAuth({
-  database: mongodbAdapter(db),
+  database: mongodbAdapter(db, {
+    client,
+  }),
 
   baseURL: process.env.BETTER_AUTH_URL,
 
@@ -45,9 +62,9 @@ export const auth = betterAuth({
     jwt({
       jwt: {
         definePayload: ({ user }) => ({
-  email: user.email,
-  name: user.name,
-  role: user.role,
+          email: user.email,
+          name: user.name,
+          role: user.role,
         }),
       },
     }),
